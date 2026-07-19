@@ -8,4 +8,7 @@ menu = """
 
 while True:
     print(menu)
-    user_choice = input("please enter yor choice: ")
+    user_choice = int(input("please enter yor choice: "))
+
+    if user_choice == 5:
+        break
