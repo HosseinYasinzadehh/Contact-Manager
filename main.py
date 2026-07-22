@@ -14,12 +14,10 @@ def add_contact():
     contact_mail = input("please enter contact mail: ")
 
     new_contact = {
-             "name" : contact_name,
+            "name" : contact_name,
             "phone" : contact_phone,
             "mail" : contact_mail
         }
-    
-
     if len(contact_name) >= 3 and len(contact_phone)>= 8 and len(contact_mail) >= 8:
         try:
             with open("contacts.json","r") as contacts_file:
@@ -33,6 +31,16 @@ def add_contact():
     else:
         print("enter valid input")
 
+def show_contacts():
+    try:
+        with open("contacts.json","r") as contacts_file:
+            contacts = json.load(contacts_file)
+    except (FileNotFoundError, json.JSONDecodeError):
+            contacts = []
+        
+    for contact in contacts:
+        print(f"name: {contact['name']}, phone: {contact['phone']}")
+
 while True:
     print(menu)
     user_choice = int(input("please enter yor choice: "))
@@ -41,3 +49,5 @@ while True:
         break
     elif user_choice == 1:
         add_contact()
+    elif user_choice == 2:
+        show_contacts()
