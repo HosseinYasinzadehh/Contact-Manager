@@ -26,7 +26,7 @@ def add_contact():
             contacts = []
         contacts.append(new_contact)
         with open("contacts.json","w") as contacts_file:
-            json.dump(contacts,contacts_file)
+            json.dump(contacts,contacts_file,indent=4)
         print("contact add!!!")
     else:
         print("enter valid input")
@@ -41,9 +41,31 @@ def show_contacts():
     for contact in contacts:
         print(f"name: {contact['name']}, phone: {contact['phone']}")
 
+def search_contacts():
+    user_search = input("please enter contact name for search: ")
+
+    try:
+        with open("contacts.json","r") as contacts_file:
+            contacts = json.load(contacts_file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        contacts = []
+            
+    for contact in contacts:
+        if user_search == contact["name"]:
+            print(f"name: {contact['name']}, phone: {contact['phone']}")
+            return
+    print("Contact not found.")
+            
+
+
+
 while True:
     print(menu)
-    user_choice = int(input("please enter yor choice: "))
+    try:
+        user_choice = int(input("please enter yor choice:"))
+    except ValueError:
+        print("enter valid value !!!")
+    print("\n")
 
     if user_choice == 5:
         break
@@ -51,3 +73,5 @@ while True:
         add_contact()
     elif user_choice == 2:
         show_contacts()
+    elif user_choice == 3:
+        search_contacts()
